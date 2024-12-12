@@ -35,10 +35,11 @@ public class DispatchController {
          * 4. 행 추가하고 dispatch 상태를 True로 업데이트
          * */
 
-        long seniorUid = setDispatchReqDTO.getSeniorUid();
-        long managerUid = setDispatchReqDTO.getManagerUid();
-        String gid = setDispatchReqDTO.getGid();
+        long seniorUid = setDispatchReqDTO.getSeniorUid(); // 노인 uid
+        long managerUid = setDispatchReqDTO.getManagerUid(); // 복지사 uid
+        String gid = setDispatchReqDTO.getGid(); // 그룹 id
 
+        // 존재하는 노인, 복지사인지 확인 + 두 유저가 같은 소속의 그룹인지 확인
         if (!dispatchService.enableDispatch(seniorUid, managerUid)){
             return ResponseEntity.ok().body(Message.builder()
                     .status(Response.StatusEnum.INTERNAL_SERVER_ERROR)
@@ -47,7 +48,8 @@ public class DispatchController {
                     .build());
         }
 
-        dispatchService.setDispatchSign(gid, seniorUid,managerUid);
+        // 출동 신호 설정
+        dispatchService.setDispatchSign(gid, seniorUid, managerUid);
 
         return ResponseEntity.ok().body(Message.builder()
                  .status(Response.StatusEnum.OK)
@@ -64,12 +66,14 @@ public class DispatchController {
     @GetMapping("/check")
     public ResponseEntity<?> checkDispatch(@RequestParam String gid){
 
+        // 출동 신호 이력 여부 검사
         Dispatch dispatch = dispatchService.checkDispatchSign(gid);
 
+        // 출동 신호 조회 후 반환하기
         if(dispatch != null){
             return ResponseEntity.ok().body(Message.builder()
                     .status(Response.StatusEnum.OK)
-                    .message("출동 신호 설정 완료")
+                    .message("그룹의 현재 출동신호를 조회합니다.")
                     .data(
                             CheckDispatchDTO.builder()
                                     .seniorUid(dispatch.getSenior().getId())

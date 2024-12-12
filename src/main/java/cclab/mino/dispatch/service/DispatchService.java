@@ -65,6 +65,7 @@ public class DispatchService {
         User manager = userManagement.findUser(managerUid);
         Group group = groupManagement.findGroup(gid);
 
+        // TODO: 유저 존재 여부 검사는 common's userManagement로 이동하기
         if (senior==null || manager==null){
             System.out.println("존재하지 않는 유저입니다.");
             return false;
@@ -76,6 +77,7 @@ public class DispatchService {
                 .status(true)
                 .group(group)
                 .build();
+
         dispatchRepository.save(dispatch);
 
         return true;
