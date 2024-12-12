@@ -4,7 +4,7 @@ import cclab.mino.common.response.Message;
 import cclab.mino.common.response.Response;
 import cclab.mino.dispatch.domain.Dispatch;
 import cclab.mino.dispatch.dto.CheckDispatchDTO;
-import cclab.mino.dispatch.dto.SetDispatchReqDTO;
+import cclab.mino.dispatch.dto.request.SetDispatchReqDTO;
 import cclab.mino.dispatch.service.DispatchService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

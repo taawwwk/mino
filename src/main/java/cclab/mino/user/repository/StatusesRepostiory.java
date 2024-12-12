@@ -20,13 +20,16 @@ public interface StatusesRepostiory extends JpaRepository<Statuses, Long> {
                              @Param("deviationStatus") int deviationStatus,
                              @Param("gatherStatus") int gatherStatus);
 
+    // 유저 건강 상태(Helath Status) 업데이트 쿼리
     @Modifying
     @Transactional
     @Query("UPDATE Statuses s SET s.healthStatus = :healthStatus WHERE s.user.id = :uid") // 문법 이게 맞나?
     int updateHealthStatusByUser(@Param("uid") long uid, @Param("healthStatus") int healthStatus);
 
+    // 유저의 건강 상태 가져오기
     Statuses findByUser(User user);
 
+    // 건강 상태 삭제 쿼리. 유저가 그룹 탈퇴 시 함꼐 호출되어야 함
     @Transactional
     int deleteAllByUser(User user);
 }

@@ -1,4 +1,4 @@
-package cclab.mino.dispatch.dto;
+package cclab.mino.dispatch.dto.request;
 
 import lombok.Builder;
 import lombok.Getter;
